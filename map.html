@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Lat/Lng Object Literal</title>
+    <script>
+      let map;
+
+      function initMap(inp_lat = -34.397, inp_lng = 150.644 ) {
+        const mapOptions = {
+          zoom: 16,
+          center: { lat: inp_lat, lng: inp_lng },
+        };
+        map = new google.maps.Map(document.getElementById("map"), mapOptions);
+        const marker = new google.maps.Marker({
+          position: { lat: inp_lat, lng: inp_lng },
+          map: map,
+        });
+        const infowindow = new google.maps.InfoWindow({
+          content: "<p>Marker Location:" + marker.getPosition() + "</p>",
+        });
+        google.maps.event.addListener(marker, "click", () => {
+          infowindow.open(map, marker);
+        });
+      }
+    </script>
+    <style>
+        #map {
+          height: 100%;
+        }
+
+        html, body {
+          height: 100%;
+          margin: 0;
+          padding: 0;
+        }
+    </style>
+    <script src="map.js"></script>
+  </head>
+  <body>
+    <div id="map"></div>
+
+    <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCY2gKKZMYfgdzFpNs2w6kk-MQIzWF6qa0&callback=initMap&libraries=&v=weekly"
+      async
+    ></script>
+  </body>
+</html>
